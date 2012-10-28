@@ -1,13 +1,14 @@
-1.0.0
- - Initial release in the Eden-Repository
-0.9.1
- - changed add-on name to "Apple iTunes Podcasts"
- - fixed spaces in search term
- - fixed keyboard dialog after context action
-0.9.0
- - initial release
- Features:
-	 - more than 60 genres
-	 - audio and video Podcasts
-	 - search for podcasts
-	 - manage "My Podcasts" favorites
+2.0.1
+ - added method and setting for auto choose server (don't ask for playlist entries)
+
+2.0.0
+ - Initial Release
+ - Features:
+    Top 500 Stations
+    Browse by genre (and subgenre if enabled in settings)
+    Search Station by name
+    Search Stations by current playing track
+    You can manage a "My Stations"-list
+    bitrate and amount of listeners visible and sortable
+    500 Stations on each Page (can be changed in the settings)
+    uses cache (24h genre, 1h station listings)
