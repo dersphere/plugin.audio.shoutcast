@@ -19,6 +19,7 @@
 
 from urllib import urlencode
 from urllib2 import urlopen, Request, HTTPError, URLError
+import random
 import simplejson as json
 import xmltodict
 
@@ -122,6 +123,16 @@ class ShoutcastApi():
             'has_parent': int(genre.get('parentid', 0)) != 0
         } for genre in genres.get('genre', [])]
 
+    def resolve_playlist(self, playlist_url):
+        response = self.__urlopen(playlist_url)
+        stream_urls = []
+        for line in response.splitlines():
+            if line.strip().startswith('File'):
+                stream_urls.append(line.split('=')[1])
+        print 'Found Stream URLS: %s' % repr(stream_urls)
+        if stream_urls:
+            return random.choice(stream_urls)
+
     def __api_call(self, path, params=None):
         if not params:
             params = {}
@@ -129,6 +140,14 @@ class ShoutcastApi():
         url = API_URL + path
         if params:
             url += '?%s' % urlencode(params)
+        response = self.__urlopen(url)
+        if params.get('f') == 'json':
+            data = json.loads(response)
+        else:
+            data = xmltodict.parse(response)
+        return data
+
+    def __urlopen(self, url):
         print 'Opening url: %s' % url
         req = Request(url)
         req.add_header('User Agent', self.USER_AGENT)
@@ -138,11 +157,7 @@ class ShoutcastApi():
             raise NetworkError('HTTPError: %s' % error)
         except URLError, error:
             raise NetworkError('URLError: %s' % error)
-        if params.get('f') == 'json':
-            data = json.loads(response)
-        else:
-            data = xmltodict.parse(response)
-        return data
+        return response
 
 
 def test():

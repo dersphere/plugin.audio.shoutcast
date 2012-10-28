@@ -14,6 +14,7 @@
     <string id="30100">Untergenres anzeigen</string>
     <string id="30101">Anzahl Podcasts</string>
     <string id="30102">Bitrate in Title einfügen</string>
+    <string id="30103">Wähle zufälligen Server (nicht fragen)</string>
     <!-- Messages -->
     <string id="30200">Netzwerkfehler</string>
 </strings>

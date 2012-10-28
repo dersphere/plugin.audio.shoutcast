@@ -14,6 +14,7 @@
     <string id="30100">Show Subgenres</string>
     <string id="30101">Num stations in list</string>
     <string id="30102">Show Bitrate in Title</string>
+    <string id="30103">Choose a random server (Don't ask)</string>
     <!-- Messages -->
     <string id="30200">Network Error</string>
 </strings>

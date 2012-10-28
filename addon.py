@@ -96,6 +96,15 @@ def show_stations(genre_id):
     return __add_stations(items)
 
 
+@plugin.route('/resolve_playlist/<playlist_url>')
+def resolve_playlist(playlist_url):
+    stream_url = api.resolve_playlist(playlist_url)
+    if stream_url:
+        plugin.set_resolved_url(stream_url)
+    else:
+        plugin.set_resolved_url(playlist_url)
+
+
 @plugin.route('/search/station/')
 def search_station():
     search_string = __keyboard(_('search_station'))
@@ -156,6 +165,7 @@ def __add_stations(stations):
     my_stations_ids = my_stations.keys()
     items = []
     show_bitrate = plugin.get_setting('show_bitrate_in_title') == 'true'
+    choose_random = plugin.get_setting('choose_random_server') == 'true'
     for i, station in enumerate(stations):
         station_id = str(station['id'])
         if not station_id in my_stations_ids:
@@ -191,13 +201,21 @@ def __add_stations(stations):
                 'tracknumber': station['id'],
                 'comment': station.get('media_type') or ''
             },
-            'properties': [
-                ('mimetype', 'audio/x-scpls'),
-            ],
             'context_menu': context_menu,
             'is_playable': True,
-            'path': station['playlist_url']
+            'path': plugin.url_for(
+                endpoint='resolve_playlist',
+                playlist_url=station['playlist_url']
+            )
         }
+        if choose_random:
+            item['path'] = plugin.url_for(
+                endpoint='resolve_playlist',
+                playlist_url=station['playlist_url']
+            )
+        else:
+            item['path'] = station['playlist_url']
+            item['properties'] = [('mimetype', 'audio/x-scpls'), ]
         items.append(item)
     finish_kwargs = {
         'sort_methods': [
