@@ -191,9 +191,9 @@ def __add_stations(stations):
             name = station['name']
         item = {
             'label': name,
-            'label2': str(i),
             'thumbnail': icon,
             'info': {
+                'count': i,
                 'genre': station.get('genre') or '',
                 'size': station.get('bitrate') or 0,
                 'listeners': station.get('listeners') or 0,
