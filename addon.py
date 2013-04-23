@@ -174,7 +174,7 @@ def __add_stations(stations):
                 'XBMC.RunPlugin(%s)' % plugin.url_for(
                     endpoint='add_to_my_stations',
                     station_id=station_id,
-                    station_name=station['name']
+                    station_name=station['name'].encode('utf-8')
                 )
             )]
         else:
