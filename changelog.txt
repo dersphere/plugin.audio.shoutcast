@@ -1,3 +1,8 @@
+2.2.0 (23.04.2013)
+ - fixed unicode related error (Top 500 was broken)
+ - added bitrate filter
+ - updated translations
+
 2.1.1 (09.03.2013)
  - updated translations
  - migrated to xbmcswift2 v2.4.0
