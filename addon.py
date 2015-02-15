@@ -163,7 +163,6 @@ def __add_stations(stations):
     my_stations_ids = my_stations.keys()
     items = []
     show_bitrate = plugin.get_setting('show_bitrate_in_title', bool)
-    choose_random = plugin.get_setting('choose_random_server', bool)
     if plugin.get_setting('bitrate_filter_enabled', bool):
         bitrates = (96, 128, 160, 192)
         min_bitrate = plugin.get_setting('bitrate_filter', choices=bitrates)
@@ -213,14 +212,6 @@ def __add_stations(stations):
                 station_id=station['id'],
             )
         }
-        if choose_random:
-            item['path'] = plugin.url_for(
-                endpoint='resolve_play_url',
-                station_id=station['id']
-            )
-        else:
-            item['path'] = station['playlist_url']
-            item['properties'] = [('mimetype', 'audio/x-scpls'), ]
         items.append(item)
     finish_kwargs = {
         'sort_methods': [
