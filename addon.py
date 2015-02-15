@@ -96,13 +96,11 @@ def show_stations(genre_id):
     return __add_stations(items)
 
 
-@plugin.route('/resolve_playlist/<playlist_url>')
-def resolve_playlist(playlist_url):
-    stream_url = api.resolve_playlist(playlist_url)
+@plugin.route('/resolve/<station_id>')
+def resolve_play_url(station_id):
+    stream_url = api.resolve(station_id)
     if stream_url:
         plugin.set_resolved_url(stream_url)
-    else:
-        plugin.set_resolved_url(playlist_url)
 
 
 @plugin.route('/search/station/')
@@ -211,14 +209,14 @@ def __add_stations(stations):
             'context_menu': context_menu,
             'is_playable': True,
             'path': plugin.url_for(
-                endpoint='resolve_playlist',
-                playlist_url=station['playlist_url']
+                endpoint='resolve_play_url',
+                station_id=station['id'],
             )
         }
         if choose_random:
             item['path'] = plugin.url_for(
-                endpoint='resolve_playlist',
-                playlist_url=station['playlist_url']
+                endpoint='resolve_play_url',
+                station_id=station['id']
             )
         else:
             item['path'] = station['playlist_url']
